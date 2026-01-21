@@ -254,5 +254,20 @@ void destroy_statement(const e_statement_type type, u_statement *statement) {
 void destroy_ast(t_ast *prog) {
     if (prog == NULL)
         return;
-    // TODO
+    switch(prog->command){
+        case If:
+        destroy_ast(prog->statement.if_st.if_true);
+        destroy_ast(prog->statement.if_st.if_false);
+        break;
+        case While:
+        destroy_ast(prog->statement.while_st.block);
+        break;
+        case Assignment:
+        case Return:
+        case Print:
+        default:
+        break;
+    }
+    destroy_ast(prog->next);
+    free(prog); //DONE
 }
