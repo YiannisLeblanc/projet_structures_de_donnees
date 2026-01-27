@@ -15,7 +15,7 @@ bool run_aux(int var_value[], const t_ast *prog) {
         case Return: {
             // prog->command == Return, so we assume that the statement has type t_return_statement
             t_return_statement st = tempProg->statement.return_st;
-            printf("->%d\n",eval_rpn(var_value, &st.expr));
+            printf("-> %d\n",eval_rpn(var_value, &st.expr));
             returnValue = true;
         }
             break;
