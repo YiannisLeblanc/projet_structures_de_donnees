@@ -79,7 +79,11 @@ t_ast *parse_aux(const t_prog_token_list *list, unsigned int *i) {
                     }*/
                     get_expr(&st.cond,list , i);
                     st.if_true = parse_aux(list, i);
-                    st.if_false = parse_aux(list, i);
+                    const t_prog_token tempToken = ptl_get(list, *i);
+                    if (tempToken.token_type == PT_KEYWORD && tempToken.content.keyword == KW_ELSE){
+                        (*i)++;
+                        st.if_false = parse_aux(list, i);
+                    }
                     prog->statement.if_st = st;
                     prog->command = If;
                     break;
@@ -99,10 +103,9 @@ t_ast *parse_aux(const t_prog_token_list *list, unsigned int *i) {
                     break;
                 }
                 case KW_ENDBLOCK:
-                case KW_ELSE: {
                     (*i)++;
+                case KW_ELSE: 
                     return NULL;
-                }
                 default:
                     printf("Syntax error: wrong keyword ");
                     print_keyword(token.content.keyword);
