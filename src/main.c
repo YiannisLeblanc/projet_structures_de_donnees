@@ -7,6 +7,10 @@
 #include "program/run.h"
 #include "structures/prog_token_list.h"
 
+//#define DEVELOPPEMENT
+
+#ifdef DEVELOPPEMENT
+
 void example() {
 
     // Source code
@@ -75,7 +79,10 @@ void example() {
     node_5.command = Return;
     node_5.statement = (u_statement) { .return_st = {.expr = expr_5 }};
     node_5.next = NULL;
-    t_ast *prog_example = &node_1;
+
+    //t_ast *prog_example = &node_1;
+
+    t_ast* prog_example = parse(&token_list);
 
     // Checking that the AST is correctly drawn
     print_ast(prog_example, "../output/code_ex.mmd");
@@ -89,20 +96,42 @@ void example() {
     */
 }
 
-
-int main() {
-
+int main(int argc, char** argv) {
+    /*
     example();
     return EXIT_SUCCESS;
-
-    const char *file_name = "../code/code.txt";
+    */
+    const char *file_name = "../code/monCode.txt";
     char *code = read_file(file_name);
     if (code == NULL)
         return EXIT_FAILURE;
-
     run_program(code);
     export_program_ast(code, file_name);
 
     free(code);
     return EXIT_SUCCESS;
 }
+
+#else
+
+int main(int argc, char** argv){
+    if(argc > 2){
+        printf("ERROR too many arguments.\n");
+        return EXIT_FAILURE;
+    }
+
+    if(argc == 1){
+        return EXIT_SUCCESS;
+    }
+
+    const char *file_name;
+    char *code = read_file(argv[1]);
+    if (code == NULL)
+        return EXIT_FAILURE;
+    run_program(code);
+
+    free(code);
+    return EXIT_SUCCESS;
+}
+
+#endif

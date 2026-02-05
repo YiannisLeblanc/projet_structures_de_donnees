@@ -76,26 +76,31 @@ t_prog_token_list lex(const char *s) {
 #define NB_KEYWORDS 7
     static const e_keyword keywords[NB_KEYWORDS] = { KW_ASSIGN, KW_IF, KW_ELSE, KW_WHILE, KW_ENDBLOCK, KW_RETURN, KW_PRINT };
     unsigned int previousIndentation = 0;
-    unsigned int currentIndentation = 0;
+    unsigned int currentIndentation;
     bool expectingExpression = false;
+    unsigned int ligne = 1;
     while(*s != '\0') {
+        currentIndentation = 0;
         if (*s == '#'){
             while(*s != '\n' && *s != '\0'){
                 s++;
             }
         } else if(*s == '\n'){
             s++;
+            ligne++;
             currentIndentation = process_indentation(&s);
-            if(currentIndentation < previousIndentation) {
+            if(currentIndentation <= previousIndentation) {
                 t_prog_token token;
                 token.token_type = PT_KEYWORD;
                 token.content.keyword = KW_ENDBLOCK;
                 for(int i = 0 ; i < (previousIndentation-currentIndentation) ; i++){
                     ptl_push_back(&list, token);
                 }
-            }
             previousIndentation = currentIndentation;
-            currentIndentation = 0;
+            } else {
+                printf("WARNING mauvaise indentation ligne : %u\n", ligne);
+
+            }
         } else if(*s==' '){
             s++;
         } else if((*s >= 'a' && *s <= 'z') && !(s[1] >= 'a' && s[1] <= 'z') && !expectingExpression){
@@ -103,6 +108,7 @@ t_prog_token_list lex(const char *s) {
             
                 ptl_push_back(&list, token);
             
+
             s++;
         } else if(expectingExpression){
             t_prog_token token;
@@ -122,7 +128,11 @@ t_prog_token_list lex(const char *s) {
                         } else {
                             ptl_push_back(&list, token);
                         }
+                        previousIndentation++;
                     } else {
+                        if(token.content.keyword == KW_IF || token.content.keyword == KW_WHILE){
+                            previousIndentation ++;
+                        }
                         ptl_push_back(&list, token);
                         expectingExpression = true;
                     }
@@ -130,6 +140,12 @@ t_prog_token_list lex(const char *s) {
             }
         }
         
+    }
+    t_prog_token token;
+    token.token_type = PT_KEYWORD;
+    token.content.keyword = KW_ENDBLOCK;
+    for(int i = 0 ; i < previousIndentation ; i++){
+        ptl_push_back(&list, token);
     }
     return list;
 }

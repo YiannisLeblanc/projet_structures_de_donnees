@@ -93,6 +93,7 @@ t_expr parse_expr(const char **s) {
         else if (*p == '(' || *p == ')') {
             token = token_of_parenthesis(*p);
         }
+        // CORRECTION du code de base, p++; à la fin du if "=" mangeait un caractère si < ou > seul.
         else if (*p == '<' || *p == '>') {
             if (*(p+1) == '=') {
                 token = token_of_operator(*p == '<' ? LEQ : GEQ);
