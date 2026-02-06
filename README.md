@@ -7,13 +7,27 @@ Le pipeline repose sur trois étapes : analyse lexicale, analyse syntaxique, pui
 
 ## Compilation et exécution
 
-Deux modes d’exécution sont disponibles dans `main.c` :
+### Flag DEVELOPPEMENT
 
-- **Mode développement** (`#define DEVELOPPEMENT`)  
-  Utilise la fonction `main` fournie par l’enseignant. Le fichier testé est défini directement dans le code.
+Deux modes d'exécution sont disponibles dans `main.c` contrôlés par le flag `#define DEVELOPPEMENT` :
 
-- **Mode compilation** (`#else`)  
+- **Mode développement** (`#define DEVELOPPEMENT` actif)  
+  Utilise la fonction `main` fournie par l'enseignant. Le fichier testé est défini directement dans le code (`../code/monCode.txt`).
+
+- **Mode release** (`#define DEVELOPPEMENT` commenté)  
   Utilise une fonction `main` prenant **un seul argument** (`argc/argv`) : le fichier à exécuter.
+
+### Recommandations
+
+**Il est fortement conseillé de compiler et exécuter le programme en mode release** (sans le flag `DEVELOPPEMENT`) pour utiliser le programme comme un logiciel classique :
+
+```bash
+./compiler_proj ./monCode.txt
+```
+
+Cela permet de passer le fichier en paramètre et d'exécuter n'importe quel script sans modifier le code source du programme.
+
+Le mode développement est utile pour tester et déboguer lors du développement, mais le flag doit être commenté pour une utilisation en production.
 
 ---
 
