@@ -19,5 +19,3 @@ CMakeUserPresets.json
 #cmake-build-*
 build
 build/**
-code 
-code/**

@@ -1,0 +1,38 @@
+stateDiagram
+	[*] --> A1
+	A1: a ← 0
+	A1 --> A2
+	A2: b ← 1
+	A2 --> A3
+	A3: c ← 0
+	A3 --> A4
+	A4: If (a b <=)
+	A4 --> A5: then
+	A5: c ← 2
+	A5 --> A6
+	A6: If (b c <)
+	A6 --> A7: then
+	A7: c ← 3
+	A6 --> A8: else
+	A8: c ← 4
+	state A9 <<choice>>
+	A7 --> A9
+	A8 --> A9
+	state A10 <<choice>>
+	A9 --> A10
+	A4 --> A10: else
+	A10: While (c)
+	A10 --> A11: then
+	A11: Print (c)
+	A11 --> A12
+	A12: If (c 1 ==)
+	A12 --> A13: then
+	A13: Print (0)
+	state A14 <<choice>>
+	A13 --> A14
+	A12 --> A14: else
+	A14: c ← c 1 -
+	A14 --> A10
+	A10 --> A15: next
+	A15: Return (c)
+	A15 --> [*]

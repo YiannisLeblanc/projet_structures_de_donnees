@@ -101,7 +101,7 @@ int main(int argc, char** argv) {
     example();
     return EXIT_SUCCESS;
     */
-    const char *file_name = "../code/monCode.txt";
+    const char *file_name = "../code/code.txt";
     char *code = read_file(file_name);
     if (code == NULL)
         return EXIT_FAILURE;
