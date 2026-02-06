@@ -22,7 +22,7 @@ Deux modes d'exécution sont disponibles dans `main.c` contrôlés par le flag `
 **Il est fortement conseillé de compiler et exécuter le programme en mode release** (sans le flag `DEVELOPPEMENT`) pour utiliser le programme comme un logiciel classique :
 
 ```bash
-./compiler_proj ./monCode.txt
+./compiler_proj monCode.txt
 ```
 
 Cela permet de passer le fichier en paramètre et d'exécuter n'importe quel script sans modifier le code source du programme.
