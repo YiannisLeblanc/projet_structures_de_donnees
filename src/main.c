@@ -121,6 +121,11 @@ int main(int argc, char** argv){
     }
 
     if(argc == 1){
+        printf("Usage: %s <filename>\n\n", argv[0]);
+        printf("Arguments:\n");
+        printf("  <filename>  Chemin vers le fichier de code à interpréter\n\n");
+        printf("Example:\n");
+        printf("  %s ./monCode.txt\n", argv[0]);
         return EXIT_SUCCESS;
     }
 
